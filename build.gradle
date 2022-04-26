@@ -1,5 +1,7 @@
 plugins {
     id "org.jenkins-ci.jpi" version "0.43.0"
+    id "maven-publish"
+    id "com.palantir.git-version" version "0.15.0"
 }
 
 ext {
@@ -9,6 +11,8 @@ ext {
 }
 
 group = "ru.funbox.jenkins.plugins"
+
+version = gitVersion()
 
 description = """This plugin allows to define job weight for pipeline projects.
         This makes it possible to use server resources more efficiently."""
@@ -34,14 +38,18 @@ dependencies {
     testImplementation 'junit:junit:4.13'
 }
 
-/*publishing {
-    publications {
-        maven(MavenPublication) {
-            from(components.java)
-        }
+publishing {
+   repositories {
+    maven {
+      name = "GitHubPackages"
+      url = "https://maven.pkg.github.com/criteo-forks/pipeline-heavy-job-plugi"
+      credentials {
+        username = System.getenv("GITHUB_ACTOR")
+        password = System.getenv("GITHUB_TOKEN")
+      }
     }
-}*/
-
+  }
+}
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
