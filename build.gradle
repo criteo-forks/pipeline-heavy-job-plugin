@@ -12,7 +12,7 @@ ext {
 
 group = "ru.funbox.jenkins.plugins"
 
-version = gitVersion()
+version = gitVersion(prefix:'pipeline-heavy-job@')
 
 description = """This plugin allows to define job weight for pipeline projects.
         This makes it possible to use server resources more efficiently."""
